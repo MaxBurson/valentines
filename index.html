@@ -13,7 +13,7 @@
 
         body {
             font-family: 'Georgia', serif;
-            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+            background: linear-gradient(135deg, #ffc0cb 0%, #ffb6c1 100%);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -24,14 +24,15 @@
 
         .container {
             text-align: center;
-            padding: 2rem;
+            padding: 3rem;
             background: rgba(255, 255, 255, 0.9);
             border-radius: 20px;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
             backdrop-filter: blur(10px);
-            max-width: 500px;
+            max-width: 700px;
             margin: 0 1rem;
             position: relative;
+            min-height: 500px;
         }
 
         h1 {
@@ -192,18 +193,23 @@
             const noBtn = document.getElementById('noBtn');
             const container = document.querySelector('.container');
             
-            // Simple approach: move to random position within viewport
-            const viewportWidth = window.innerWidth;
-            const viewportHeight = window.innerHeight;
+            // Get container dimensions
+            const containerRect = container.getBoundingClientRect();
             const btnWidth = 100;
             const btnHeight = 50;
             
-            // Keep button within viewport bounds
-            const maxX = viewportWidth - btnWidth - 50;
-            const maxY = viewportHeight - btnHeight - 50;
+            // Calculate position relative to container
+            const containerLeft = containerRect.left;
+            const containerTop = containerRect.top;
+            const containerWidth = containerRect.width;
+            const containerHeight = containerRect.height;
             
-            const newX = Math.random() * maxX + 25;
-            const newY = Math.random() * maxY + 25;
+            // Keep button within container bounds with padding
+            const maxX = containerWidth - btnWidth - 40;
+            const maxY = containerHeight - btnHeight - 40;
+            
+            const newX = containerLeft + Math.random() * maxX + 20;
+            const newY = containerTop + Math.random() * maxY + 20;
             
             noBtn.style.position = 'fixed';
             noBtn.style.left = newX + 'px';
