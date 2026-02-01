@@ -31,6 +31,7 @@
             backdrop-filter: blur(10px);
             max-width: 500px;
             margin: 0 1rem;
+            position: relative;
         }
 
         h1 {
@@ -195,12 +196,12 @@
             const containerRect = container.getBoundingClientRect();
             const btnRect = noBtn.getBoundingClientRect();
             
-            // Calculate new random position within container bounds
-            const maxX = containerRect.width - btnRect.width - 60;
-            const maxY = containerRect.height - btnRect.height - 60;
+            // Calculate new random position within container bounds (relative to container)
+            const maxX = container.offsetWidth - btnRect.width - 40;
+            const maxY = container.offsetHeight - btnRect.height - 40;
             
-            const newX = Math.random() * maxX + 30;
-            const newY = Math.random() * maxY + 120;
+            const newX = Math.random() * maxX + 20;
+            const newY = Math.random() * maxY + 100;
             
             noBtn.style.position = 'absolute';
             noBtn.style.left = newX + 'px';
