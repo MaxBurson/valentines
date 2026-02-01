@@ -200,17 +200,25 @@
             const btnHeight = 50;
             
             // Keep button within container bounds with padding
-            const maxX = containerWidth - btnWidth - 40;
-            const maxY = containerHeight - btnHeight - 40;
+            const maxX = containerWidth - btnWidth - 60;
+            const maxY = containerHeight - btnHeight - 60;
             
-            const newX = Math.random() * maxX + 20;
-            const newY = Math.random() * maxY + 20;
+            // Ensure we don't get negative values
+            const safeMaxX = Math.max(0, maxX);
+            const safeMaxY = Math.max(0, maxY);
             
+            const newX = Math.random() * safeMaxX + 30;
+            const newY = Math.random() * safeMaxY + 30;
+            
+            // Make sure the button is positioned relative to container
             noBtn.style.position = 'absolute';
             noBtn.style.left = newX + 'px';
             noBtn.style.top = newY + 'px';
             noBtn.style.transition = 'all 0.3s ease';
             noBtn.style.zIndex = '10';
+            
+            // Debug: log the position
+            console.log(`Container: ${containerWidth}x${containerHeight}, Button: ${newX}x${newY}`);
         }
 
         function createFloatingHearts() {
