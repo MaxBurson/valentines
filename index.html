@@ -61,20 +61,18 @@
             justify-content: center;
             margin-top: 2rem;
             flex-wrap: wrap;
-            position: relative;
-            min-height: 60px;
         }
 
-        .btn-wrapper {
-            display: flex;
-            gap: 4rem;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .btn-yes-wrapper {
-            position: relative;
-            flex: 0 0 auto;
+        .btn-placeholder {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-family: 'Georgia', serif;
+            font-weight: 500;
+            opacity: 0;
+            pointer-events: none;
+            width: 100px;
         }
 
         .btn {
@@ -105,6 +103,9 @@
             color: white;
             box-shadow: 0 10px 20px rgba(149, 165, 166, 0.3);
             transition: all 0.3s ease;
+            position: absolute;
+            left: 50%;
+            transform: translateX(50%);
         }
 
         .success-screen {
@@ -179,13 +180,10 @@
         <h1><span style="color: #c0392b; font-weight: 600;">Katelyn Van Der Toorren</span>,<br>will you be my Valentine?</h1>
         <div class="heart">❤️</div>
         <div class="buttons">
-            <div class="btn-wrapper">
-                <div class="btn-yes-wrapper">
-                    <button class="btn btn-yes" onclick="sayYes()">Yes</button>
-                </div>
-                <button class="btn btn-no" id="noBtn" onmouseover="moveNoButton()">No</button>
-            </div>
+            <button class="btn btn-yes" onclick="sayYes()">Yes</button>
+            <div class="btn-placeholder">No</div>
         </div>
+        <button class="btn btn-no" id="noBtn" onmouseover="moveNoButton()">No</button>
     </div>
 
     <div class="success-screen" id="successScreen">
@@ -209,7 +207,6 @@
         function moveNoButton() {
             const noBtn = document.getElementById('noBtn');
             const container = document.querySelector('.container');
-            const buttonsContainer = document.querySelector('.buttons');
             
             // Get container dimensions
             const containerRect = container.getBoundingClientRect();
@@ -217,33 +214,29 @@
             const containerHeight = container.offsetHeight;
             
             // Define safe area within the white box
-            const padding = 40;
-            const maxButtonWidth = 120;
-            const maxButtonHeight = 60;
+            const padding = 50;
+            const btnWidth = 100;
+            const btnHeight = 50;
             
-            // Calculate safe bounds
+            // Calculate safe bounds (relative to container)
             const minX = padding;
-            const maxX = containerWidth - maxButtonWidth - padding;
-            const minY = 200; // Start below the title area
-            const maxY = containerHeight - maxButtonHeight - padding;
+            const maxX = containerWidth - btnWidth - padding;
+            const minY = 180; // Below title and heart
+            const maxY = containerHeight - btnHeight - padding;
             
-            // Ensure bounds are valid
-            const safeMaxX = Math.max(minX + 50, maxX);
-            const safeMaxY = Math.max(minY + 20, maxY);
+            // Generate random position
+            const newX = Math.random() * (maxX - minX) + minX;
+            const newY = Math.random() * (maxY - minY) + minY;
             
-            // Generate random position within safe bounds
-            const newX = Math.random() * (safeMaxX - minX) + minX;
-            const newY = Math.random() * (safeMaxY - minY) + minY;
-            
-            // Position the button
+            // Position the button absolutely within container
             noBtn.style.position = 'absolute';
             noBtn.style.left = newX + 'px';
             noBtn.style.top = newY + 'px';
+            noBtn.style.transform = 'none';
             noBtn.style.transition = 'all 0.3s ease';
             noBtn.style.zIndex = '10';
             
-            // Debug: log the position
-            console.log(`Container: ${containerWidth}x${containerHeight}, Button: ${newX}x${newY}, Bounds: ${minX}-${safeMaxX}x${minY}-${safeMaxY}`);
+            console.log(`Container: ${containerWidth}x${containerHeight}, Button pos: ${newX}, ${newY}, Max: ${maxX}, ${maxY}`);
         }
 
         function createFloatingHearts() {
