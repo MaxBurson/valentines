@@ -72,7 +72,7 @@
             font-weight: 500;
             opacity: 0;
             pointer-events: none;
-            width: 100px;
+            visibility: hidden;
         }
 
         .btn {
@@ -104,8 +104,8 @@
             box-shadow: 0 10px 20px rgba(149, 165, 166, 0.3);
             transition: all 0.3s ease;
             position: absolute;
-            left: 50%;
-            transform: translateX(50%);
+            top: 320px;
+            right: 180px;
         }
 
         .success-screen {
@@ -208,23 +208,25 @@
             const noBtn = document.getElementById('noBtn');
             const container = document.querySelector('.container');
             
+            // Get actual button dimensions
+            const btnRect = noBtn.getBoundingClientRect();
+            const btnWidth = btnRect.width;
+            const btnHeight = btnRect.height;
+            
             // Get container dimensions
-            const containerRect = container.getBoundingClientRect();
             const containerWidth = container.offsetWidth;
             const containerHeight = container.offsetHeight;
             
-            // Define safe area within the white box
-            const padding = 50;
-            const btnWidth = 100;
-            const btnHeight = 50;
+            // Define safe area within the white box with padding
+            const padding = 40;
             
-            // Calculate safe bounds (relative to container)
+            // Calculate safe bounds (relative to container, top-left origin)
             const minX = padding;
             const maxX = containerWidth - btnWidth - padding;
-            const minY = 180; // Below title and heart
+            const minY = 200; // Below title and heart
             const maxY = containerHeight - btnHeight - padding;
             
-            // Generate random position
+            // Generate random position within bounds
             const newX = Math.random() * (maxX - minX) + minX;
             const newY = Math.random() * (maxY - minY) + minY;
             
@@ -232,11 +234,12 @@
             noBtn.style.position = 'absolute';
             noBtn.style.left = newX + 'px';
             noBtn.style.top = newY + 'px';
+            noBtn.style.right = 'auto';
             noBtn.style.transform = 'none';
             noBtn.style.transition = 'all 0.3s ease';
             noBtn.style.zIndex = '10';
             
-            console.log(`Container: ${containerWidth}x${containerHeight}, Button pos: ${newX}, ${newY}, Max: ${maxX}, ${maxY}`);
+            console.log(`Container: ${containerWidth}x${containerHeight}, Button: ${btnWidth}x${btnHeight}, Pos: ${newX.toFixed(0)}, ${newY.toFixed(0)}, Range: ${minX}-${maxX}, ${minY}-${maxY}`);
         }
 
         function createFloatingHearts() {
