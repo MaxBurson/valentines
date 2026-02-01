@@ -162,7 +162,7 @@
     <div class="floating-hearts" id="floatingHearts"></div>
     
     <div class="container" id="mainContainer">
-        <h1><span style="color: #c0392b; font-weight: 600;"></span>Katelyn Van Der Toorren</span>,<br>will you be my Valentine?</h1>
+        <h1><span style="color: #c0392b; font-weight: 600;">Katelyn Van Der Toorren</span>,<br>will you be my Valentine?</h1>
         <div class="heart">❤️</div>
         <div class="buttons">
             <button class="btn btn-yes" onclick="sayYes()">Yes</button>
@@ -192,22 +192,24 @@
             const noBtn = document.getElementById('noBtn');
             const container = document.querySelector('.container');
             
-            // Get container dimensions
-            const containerRect = container.getBoundingClientRect();
-            const btnRect = noBtn.getBoundingClientRect();
+            // Simple approach: move to random position within viewport
+            const viewportWidth = window.innerWidth;
+            const viewportHeight = window.innerHeight;
+            const btnWidth = 100;
+            const btnHeight = 50;
             
-            // Calculate new random position within container bounds (relative to container)
-            const maxX = container.offsetWidth - btnRect.width - 40;
-            const maxY = container.offsetHeight - btnRect.height - 40;
+            // Keep button within viewport bounds
+            const maxX = viewportWidth - btnWidth - 50;
+            const maxY = viewportHeight - btnHeight - 50;
             
-            const newX = Math.random() * maxX + 20;
-            const newY = Math.random() * maxY + 100;
+            const newX = Math.random() * maxX + 25;
+            const newY = Math.random() * maxY + 25;
             
-            noBtn.style.position = 'absolute';
+            noBtn.style.position = 'fixed';
             noBtn.style.left = newX + 'px';
             noBtn.style.top = newY + 'px';
             noBtn.style.transition = 'all 0.3s ease';
-            noBtn.style.zIndex = '10';
+            noBtn.style.zIndex = '1000';
         }
 
         function createFloatingHearts() {
