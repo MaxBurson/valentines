@@ -194,28 +194,23 @@
             const container = document.querySelector('.container');
             
             // Get container dimensions
-            const containerRect = container.getBoundingClientRect();
+            const containerWidth = container.offsetWidth;
+            const containerHeight = container.offsetHeight;
             const btnWidth = 100;
             const btnHeight = 50;
-            
-            // Calculate position relative to container
-            const containerLeft = containerRect.left;
-            const containerTop = containerRect.top;
-            const containerWidth = containerRect.width;
-            const containerHeight = containerRect.height;
             
             // Keep button within container bounds with padding
             const maxX = containerWidth - btnWidth - 40;
             const maxY = containerHeight - btnHeight - 40;
             
-            const newX = containerLeft + Math.random() * maxX + 20;
-            const newY = containerTop + Math.random() * maxY + 20;
+            const newX = Math.random() * maxX + 20;
+            const newY = Math.random() * maxY + 20;
             
-            noBtn.style.position = 'fixed';
+            noBtn.style.position = 'absolute';
             noBtn.style.left = newX + 'px';
             noBtn.style.top = newY + 'px';
             noBtn.style.transition = 'all 0.3s ease';
-            noBtn.style.zIndex = '1000';
+            noBtn.style.zIndex = '10';
         }
 
         function createFloatingHearts() {
