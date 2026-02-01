@@ -161,7 +161,7 @@
     <div class="floating-hearts" id="floatingHearts"></div>
     
     <div class="container" id="mainContainer">
-        <h1><span style="color: #c0392b; font-weight: 600;">Katelyn Van Der Toorren</span>,<br>will you be my Valentine?</h1>
+        <h1><span style="color: #c0392b; font-weight: 600;"></span>Katelyn Van Der Toorren</span>,<br>will you be my Valentine?</h1>
         <div class="heart">❤️</div>
         <div class="buttons">
             <button class="btn btn-yes" onclick="sayYes()">Yes</button>
@@ -196,16 +196,17 @@
             const btnRect = noBtn.getBoundingClientRect();
             
             // Calculate new random position within container bounds
-            const maxX = containerRect.width - btnRect.width - 40;
-            const maxY = containerRect.height - btnRect.height - 40;
+            const maxX = containerRect.width - btnRect.width - 60;
+            const maxY = containerRect.height - btnRect.height - 60;
             
-            const newX = Math.random() * maxX + 20;
-            const newY = Math.random() * maxY + 100;
+            const newX = Math.random() * maxX + 30;
+            const newY = Math.random() * maxY + 120;
             
             noBtn.style.position = 'absolute';
             noBtn.style.left = newX + 'px';
             noBtn.style.top = newY + 'px';
             noBtn.style.transition = 'all 0.3s ease';
+            noBtn.style.zIndex = '10';
         }
 
         function createFloatingHearts() {
