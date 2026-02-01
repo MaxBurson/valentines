@@ -65,6 +65,18 @@
             min-height: 60px;
         }
 
+        .btn-wrapper {
+            display: flex;
+            gap: 4rem;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .btn-yes-wrapper {
+            position: relative;
+            flex: 0 0 auto;
+        }
+
         .btn {
             padding: 1rem 2rem;
             border: none;
@@ -81,8 +93,6 @@
             background: linear-gradient(135deg, #e74c3c, #c0392b);
             color: white;
             box-shadow: 0 10px 20px rgba(231, 76, 60, 0.3);
-            position: relative;
-            z-index: 5;
         }
 
         .btn-yes:hover {
@@ -169,8 +179,12 @@
         <h1><span style="color: #c0392b; font-weight: 600;">Katelyn Van Der Toorren</span>,<br>will you be my Valentine?</h1>
         <div class="heart">❤️</div>
         <div class="buttons">
-            <button class="btn btn-yes" onclick="sayYes()">Yes</button>
-            <button class="btn btn-no" id="noBtn" onmouseover="moveNoButton()">No</button>
+            <div class="btn-wrapper">
+                <div class="btn-yes-wrapper">
+                    <button class="btn btn-yes" onclick="sayYes()">Yes</button>
+                </div>
+                <button class="btn btn-no" id="noBtn" onmouseover="moveNoButton()">No</button>
+            </div>
         </div>
     </div>
 
@@ -197,27 +211,31 @@
             const container = document.querySelector('.container');
             const buttonsContainer = document.querySelector('.buttons');
             
-            // Get buttons container dimensions (where the button should stay)
-            const buttonsRect = buttonsContainer.getBoundingClientRect();
+            // Get container dimensions
             const containerRect = container.getBoundingClientRect();
-            
-            // Calculate position relative to container
-            const relativeTop = buttonsRect.top - containerRect.top;
-            const buttonsHeight = buttonsRect.height;
             const containerWidth = container.offsetWidth;
+            const containerHeight = container.offsetHeight;
             
-            // Keep button within the buttons area and container bounds
-            const maxX = containerWidth - 120; // button width + padding
-            const maxY = Math.min(400, relativeTop + buttonsHeight - 60); // Don't go too far down
+            // Define safe area within the white box
+            const padding = 40;
+            const maxButtonWidth = 120;
+            const maxButtonHeight = 60;
             
-            // Ensure we don't get negative values
-            const safeMaxX = Math.max(100, maxX); // At least 100px from left
-            const safeMaxY = Math.max(relativeTop, maxY); // At least at buttons level
+            // Calculate safe bounds
+            const minX = padding;
+            const maxX = containerWidth - maxButtonWidth - padding;
+            const minY = 200; // Start below the title area
+            const maxY = containerHeight - maxButtonHeight - padding;
             
-            const newX = Math.random() * (safeMaxX - 100) + 100;
-            const newY = Math.random() * (safeMaxY - relativeTop) + relativeTop;
+            // Ensure bounds are valid
+            const safeMaxX = Math.max(minX + 50, maxX);
+            const safeMaxY = Math.max(minY + 20, maxY);
             
-            // Make sure the button is positioned relative to container
+            // Generate random position within safe bounds
+            const newX = Math.random() * (safeMaxX - minX) + minX;
+            const newY = Math.random() * (safeMaxY - minY) + minY;
+            
+            // Position the button
             noBtn.style.position = 'absolute';
             noBtn.style.left = newX + 'px';
             noBtn.style.top = newY + 'px';
@@ -225,7 +243,7 @@
             noBtn.style.zIndex = '10';
             
             // Debug: log the position
-            console.log(`Container: ${containerWidth}x${container.offsetHeight}, Button: ${newX}x${newY}, Buttons area: ${relativeTop}x${buttonsHeight}`);
+            console.log(`Container: ${containerWidth}x${containerHeight}, Button: ${newX}x${newY}, Bounds: ${minX}-${safeMaxX}x${minY}-${safeMaxY}`);
         }
 
         function createFloatingHearts() {
